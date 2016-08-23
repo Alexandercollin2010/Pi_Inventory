@@ -4,6 +4,10 @@ Simple start project for tier 2 day 2's Inventory app.
 
 Video to help you get from lecture three's end through the last state of the project: https://youtu.be/fMc-A9jo5Rc
 
+Try to get this to the point where it is working as the master branch is here. Add your own items and see if you can get through the challenges as listed below.
+
+Make sure to push your work to Github when complete!
+
 Once you get up to speed on this you'll have the following working:
 -----------------
 * handshake between js and html (sourcing inventory.js)
