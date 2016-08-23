@@ -1,12 +1,15 @@
 console.log( 'inventory.js sourced' );
 // global vars
+var inventory;
 var selectedColor ='none';
 var selectedSize ='none';
 
-var getSizeSelection = function(){
-  console.log( 'in getSizeSelection' );
-  console.log( 'selected size:', document.getElementById('sizeIn').value );
-} // end getSizeSelection
+var addItem = function( color, name, size ){
+  console.log( 'adding item: ' + name + ' ' + color + ' ' + size );
+  // create object
+  // push into array
+  // show updated inventory
+} // end addItem
 
 var searchInventory = function(){
   console.log( 'in searchInventory' );
@@ -17,3 +20,10 @@ var searchInventory = function(){
   console.log( 'looking for something ' + selectedColor + ' and ' + selectedSize );
   // check if an item fits this description
 } // end searchInventory
+
+///////// ADD ITEMS /////////
+addItem( 'blue', 'Smurf', 'Small');
+addItem( 'mermaid treasure', 'Prime Academy', 'Large');
+addItem( 'bus seat green', 'Baby Banner', 'Medium');
+addItem( 'purple', 'Eggplant', 'Small');
+addItem( 'purple', 'Prince', 'Medium');
