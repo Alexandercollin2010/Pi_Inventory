@@ -7,11 +7,11 @@ var pg = require('pg');
 var urlEncodedParser = bodyParser.urlencoded( { extended: true } );
 var port = process.env.PORT || 8080;
 
-//connection string to database named "inventory"
-//table named "items" wtih columns "object_name", "color", "size"
+//string to cennect to my database
 var connectionString = 'postgres://localhost:5432/inventory';
 
-app.use( express.static( 'public' ) );//static folder
+//static folder
+app.use( express.static( 'public' ) );
 
 // spin up server
 app.listen( port, function(){
@@ -22,12 +22,11 @@ app.listen( port, function(){
 app.get( '/', function( req, res ){
   console.log( 'base url hit' );
   res.sendFile( path.resolve( 'views/index.html' ) );
-}); // end home base
+}); // end base
 
-// add new objects to the inventory
+// add new item to the inventory
 app.post( '/addItem', urlEncodedParser, function( req, res ){
   console.log( 'addItem route hit:', req.body );
-  // add the item from req.body to the table
   pg.connect(connectionString, function(err, client, done){
     if(err){
       console.log(err);
@@ -36,14 +35,13 @@ app.post( '/addItem', urlEncodedParser, function( req, res ){
       client.query('INSERT INTO items (object_name, color, size) values ($1, $2, $3)', [req.body.name, req.body.color, req.body.size]);
       done();
       res.send('go!');
-    }
-  });//end connection to db
-}); // end addItem route
+    }// end else
+  });//end pg.connect
+}); // end app.post
 
-// get all objects in the inventory
+// get all items from the inventory
 app.get( '/getInventory', function( req, res ){
   console.log( 'getInventory route hit' );
-  // get all items in the table and return them to client
   pg.connect(connectionString, function(err, client, done){
     if(err){
       console.log(err);
@@ -53,12 +51,12 @@ app.get( '/getInventory', function( req, res ){
       var allItems = [];
       query.on('row', function(row){
         allItems.push(row);
-      });
+      });// end query.on
       query.on('end', function(){
         done();
         console.log(allItems);
         res.send(allItems);
-      });
-    }
-  });//end pg connect in get
-});//end getInventory route
+      });// end query.on
+    }// end else
+  });// end pg.connect
+});// end app.get

@@ -1,6 +1,7 @@
-var items = [];//global array of items in the inventory
+var items = [];
 
 $(document).ready(function(){
+
   $('#addItemButton').on('click', function(){
     addObject(event);
     $('#addObject').val('');
@@ -23,24 +24,20 @@ var addObject = function(event){
     color: $('#addColor').val(),
     size: $('#addSize').val()
   }; // end newItem
-//  console.log( 'adding:', newItem );
   $.ajax({
     type: 'POST',
     url: '/addItem',
     data: newItem,
     success: function(response){
-  //    console.log('back from POST call:', response);
+     console.log('back from POST call:', response);
     },//end success function
     error: function(){
-  //    console.log('error with addItem ajax call...');
+     console.log('error with addItem ajax call...');
     }//end error function
-  });//end ajax call in addObject
-  //getObjects(event);
-}; // end addObject function
+  });//end ajax call
+}; // end addObject
 
 var findObject = function(array){
-//  console.log( 'in findObject. Looking for:', $('#searchColor').val(), $('#searchSize').val());
-  // array of matches
   var matches = [];
   for ( var i = 0; i < items[0].length; i++ ) {
     if(items[0][i].color == $('#searchColor').val() && items[0][i].size == $('#searchSize').val()){
@@ -48,13 +45,11 @@ var findObject = function(array){
       matches.push(items[0][i]);
     } // end if
   } // end for
-//  console.log( 'matches:', matches );
-  ////// TODO: display matches
   displaySearchResults(matches);
-}; // end findObject function
+}; // end findObject
 
 var displaySearchResults = function(array){
-  $('#outputDiv').html('');//clear outputDiv
+  $('#outputDiv').html('');
   if(array.length <1){
     $('#outputDiv').append('<h3>' + 'There are no matches in the inventory' + '</h3>');
   } else {
@@ -62,19 +57,18 @@ var displaySearchResults = function(array){
     for(var i=0; i < array.length; i++ ){
       $('#outputDiv').append('<p id="resultsDisplay">' + array[i].size + ' ' + array[i].color + ' ' + array[i].object_name + '</p>');
     }//end for loop
-  }//end else statement
-};//end displaySearchResults function
+  }//end else
+};//end displaySearchResults
 
 var getObjects = function(event){
-//  console.log( 'in getObjects');
   event.preventDefault();
   $.ajax({
     type: 'GET',
     url: '/getInventory',
     success: function(response){
-  //    console.log('added to items array from get:', response);
+     console.log('added to items array from get:', response);
       items.push(response);
       findObject(items);
-    }//end success function
-  });//end getObjects ajax
-}; // end getObjects function
+    }//end success
+  });//end ajax call
+}; // end getObjects 
